@@ -1,0 +1,18 @@
+{
+  "name": "steam-buddy",
+  "description": "Steam buddy is a small node bot that watches for Steam users to join a game.",
+  "repository": "https://github.com/aleccool213/steam-buddy",
+  "logo": "",
+  "keywords": [],
+  "addons": ["heroku-postgresql:hobby-dev"],
+  "env": {
+    "SLACK_TOKEN": {
+      "description": "The slack token provided for the integration.",
+      "required": true
+    },
+    "STEAM_API_KEY": {
+      "description": "The steam token provided for the integration.",
+      "required": true
+    }
+  }
+}

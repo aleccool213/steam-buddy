@@ -1,7 +1,7 @@
 {
   "name": "steam-buddy",
   "version": "2.1.0",
-  "description": "Steam integration for fastchat",
+  "description": "Steam integration for slack",
   "main": "steambuddy.js",
   "scripts": {
     "start": "make run",
@@ -22,7 +22,6 @@
   "homepage": "https://github.com/stormageddon/steam-buddy",
   "dependencies": {
     "async": "^1.4.2",
-    "coffee-script": "^1.9.3",
     "hapi": "^12.1.0",
     "pg": "^4.5.5",
     "q": "^1.4.1",

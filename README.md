@@ -76,6 +76,6 @@ Running Steam Buddy requires that you have a few environment variables set:
 2. Set up the database (see Configuration section above)
 3. Set up your integrations and environment variables (see Configuring for Slack above)
 4. run `npm install` to install all dependencies
-5. run `make run` to run steam buddy
+5. run `npm start` to run steam buddy
 
 It is suggested you run Steam Buddy on Heroku!

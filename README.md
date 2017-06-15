@@ -23,23 +23,12 @@ As of version 2.0, Steam Buddy no longer stores information in a configuration f
 The reason Steam Buddy has moved to an actual database is because it allows Steam Buddy to grow. A configuration file is tricky to manage manually and required you to do a lot of manual mapping of usernames to id's. With a database, Steam Buddy can handle all of it, while also gaining the very useful ability to easily add new users and to restore the users it is watching should it crash.
 
 ### Setting up Postgres
-The Postgres setup for Steam Buddy is actually very easy. It has 1 required table, and 1 optional table. The required table is `sb_user`, and is where all of the slack users that Steam Buddy is tracking are stored. The schema that you should setup for `sb_user` is this:
 
-` id |     username     |      steamid      |     steamvanity      |  slackid  |              integration_fk               
-----+------------------+-------------------+----------------------+-----------+-------------------------------------------`
+The Postgres setup for Steam Buddy is actually very easy. Just set up postgres run this command:
 
+`psql -f schema.sql <postgres_url>`
 
-`id: SERIAL, PRIMARY KEY, NOT NULL` - used as the primary key for users
-
-`username: varchar, NOT NULL` - The display name that Steam Buddy will use when sending a message
-
-`steamid: varchar, NOT NULL` - the 64 bit steam id of a user
-
-`steamvanity: varchar` - the vanity name of a user
-
-`slackid: varchar` - This is the bot id of the slack bot integration this user is associated with
-
-`integration_fk: varchar, FOREIGN KEY, NOT NULL` - This is the slack integration token that each user is associated with. If you are using the `sb_integration` table, this is a foreign key reference to it. This should also be set as unique with the steamid, if used.
+and you are set!
 
 The Postgres class in `lib/js/dao/` creates a connection string that is populated by environment variables. You must set all of these variables in order for Steam Buddy to connect to the database.
 
@@ -58,19 +47,12 @@ In order for Steam Buddy to send Slack messages, it needs to be set up as a slac
 
 Once you have created the integration, there are then 2 ways you can tell Steam Buddy about the bot. If you are only going to run Steam Buddy within a single Slack team, you can set the slack token as an environment variable: `export SLACK_TOKEN="abcd-1234-abcd-1234"`. Steam Buddy will read this token in when launched and use it to authenticate into Slack and send messages.
 
-The second way to save an integration is to store it within your database. If no `SLACK_TOKEN` environment variable is found, Steam Buddy will read in all the integrations from the `sb_integration` table of your configured database. `sb_integration` must have the following schema:
-
-`                    id                     | type  | owner
--------------------------------------------+-------+-------`
-
-where id is your slack token (varchar), type is 'slack' (varchar), and owner is an integer. On start up, Steam Buddy will fetch all rows in this table and create new Slack integrations using the fetched tokens. This is useful for running Steam Buddy on multiple teams - each team's integration will have it's own token which is stored in the database.
-
 Steam Buddy also requires a steam API key. You can generate an api key in steam, and then add it to your environment with `STEAM_API_KEY="ABCDEFGHIJKLMNOP1234567890"`.
 
 ## Running Steam Buddy
 Running Steam Buddy requires that you have a few environment variables set:
 * [Steam API Key](http://steamcommunity.com/dev/registerkey): set as environment variable `STEAM_API_KEY`
-* [Slack Integration](https://api.slack.com/bot-users): set the slack token provided for the integration as `SLACK_TOKEN` (only needed if you do not have an `sb_integration` table in your database)
+* [Slack Integration](https://api.slack.com/bot-users): set the slack token provided for the integration as `SLACK_TOKEN`
 
 1. Clone the Steam Buddy repository.
 2. Set up the database (see Configuration section above)

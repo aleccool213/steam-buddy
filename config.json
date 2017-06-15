@@ -1,5 +1,5 @@
 {
-  "users": ["Abattoir", "churak", "st1ny"],
+  "users": ["aleccool21"],
   "slack": {
     "message": "#{player} is playing #{game}! Go join them!"
   }
